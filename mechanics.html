@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designações Mecânicas</title>
+    <!-- Biblioteca para gerar o PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #1f4e79;
+            --border-color: #000000;
+            --bg-color: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #e2e8f0;
+            padding: 10px;
+            color: #000;
+        }
+
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        #conteudo-pdf {
+            background-color: white;
+            padding: 25px 5px 5px 5px; 
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+            font-size: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto; /* Permite scroll horizontal se o ecrã for muito pequeno */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            table-layout: fixed;
+        }
+
+        th, td {
+            border: 1px solid #000 !important;
+            padding: 8px 4px; 
+            text-align: left;
+            vertical-align: middle;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        th {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            -webkit-print-color-adjust: exact;
+        }
+
+        td {
+            font-size: 14px;
+            line-height: 1.2;
+        }
+
+        th:nth-child(1), td:nth-child(1) {
+            width: 85px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Removido o display: block que estava a quebrar a tabela no desktop */
+        [contenteditable="true"] {
+            outline: none;
+            min-height: 20px;
+            width: 100%;
+        }
+
+        [contenteditable="true"]:hover {
+            background-color: #f8fafc;
+        }
+
+        [contenteditable="true"]:focus {
+            background-color: #e2e8f0;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex: 1;
+        }
+
+        .btn-add {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .btn-add:hover {
+            background-color: #059669;
+        }
+
+        .btn-print {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .btn-print:hover {
+            background-color: #2563eb;
+        }
+
+        /* Responsividade para telemóveis (Desativada durante a geração do PDF) */
+        @media screen and (max-width: 768px) {
+            body:not(.exportando-pdf) table, 
+            body:not(.exportando-pdf) thead, 
+            body:not(.exportando-pdf) tbody, 
+            body:not(.exportando-pdf) th, 
+            body:not(.exportando-pdf) td, 
+            body:not(.exportando-pdf) tr {
+                display: block; /* Aqui sim, no telemóvel, deve ser bloco */
+                width: 100%;
+            }
+
+            body:not(.exportando-pdf) thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            body:not(.exportando-pdf) tr {
+                border: 2px solid var(--primary-color) !important;
+                margin-bottom: 15px;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            body:not(.exportando-pdf) th:nth-child(1), 
+            body:not(.exportando-pdf) td:nth-child(1) {
+                width: 100%;
+                text-align: left;
+            }
+
+            body:not(.exportando-pdf) td {
+                border: none !important;
+                border-bottom: 1px solid #ddd !important;
+                position: relative;
+                padding: 10px 10px 10px 45% !important;
+                min-height: 40px;
+            }
+            
+            body:not(.exportando-pdf) td:last-child {
+                border-bottom: none !important;
+            }
+
+            body:not(.exportando-pdf) td:before {
+                content: attr(data-label);
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                width: 40%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: bold;
+                color: var(--primary-color);
+                font-size: 13px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div id="conteudo-pdf">
+            <h1>Designações Mecânicas</h1>
+            
+            <div class="table-wrapper">
+                <table id="tabela-designacoes">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Áudio / Vídeo</th>
+                            <th>Palco</th>
+                            <th>Microfones</th>
+                            <th>Porta de entrada</th>
+                            <th>Auditório</th>
+                            <th>Leitor Sentinela</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpo-tabela">
+                        <tr>
+                            <td contenteditable="true" data-label="Data">24-30-agosto</td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo">Flavio Santos<br>Ezequiel</td>
+                            <td contenteditable="true" data-label="Palco">Samuel</td>
+                            <td contenteditable="true" data-label="Microfones">Midian Nascimento<br>Robson</td>
+                            <td contenteditable="true" data-label="Porta de entrada">Alberto j</td>
+                            <td contenteditable="true" data-label="Auditório">Igor</td>
+                            <td contenteditable="true" data-label="Leitor Sentinela">Lucas Da Hora</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" data-label="Data">31-6-setembro</td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo">Luis Henrique<br>Pedro Henrique</td>
+                            <td contenteditable="true" data-label="Palco">Alberto Rodrigues</td>
+                            <td contenteditable="true" data-label="Microfones">Bruno<br>Reginaldo</td>
+                            <td contenteditable="true" data-label="Porta de entrada">Alex Lelis</td>
+                            <td contenteditable="true" data-label="Auditório">Claudio</td>
+                            <td contenteditable="true" data-label="Leitor Sentinela">Humberto</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" data-label="Data">07-13-setembro</td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo">Sidney<br>Samuel</td>
+                            <td contenteditable="true" data-label="Palco">Midian Nascimento</td>
+                            <td contenteditable="true" data-label="Microfones">Pedro Henrique<br>Flavio</td>
+                            <td contenteditable="true" data-label="Porta de entrada">Felipe Paixao</td>
+                            <td contenteditable="true" data-label="Auditório">Paulo Henrique</td>
+                            <td contenteditable="true" data-label="Leitor Sentinela">Alberto j</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" data-label="Data">14-20-setembro</td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo">Luis Henrique<br>Flavio Santos</td>
+                            <td contenteditable="true" data-label="Palco">Robson</td>
+                            <td contenteditable="true" data-label="Microfones">Reginaldo<br>Alberto Rodrigues</td>
+                            <td contenteditable="true" data-label="Porta de entrada">Lucas Da Hora</td>
+                            <td contenteditable="true" data-label="Auditório">Reginaldo</td>
+                            <td contenteditable="true" data-label="Leitor Sentinela">Ezequiel</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" data-label="Data">21-27-setembro</td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo">Alberto Jr<br>Samuel</td>
+                            <td contenteditable="true" data-label="Palco">Sidney</td>
+                            <td contenteditable="true" data-label="Microfones">Pedro henrique</td>
+                            <td contenteditable="true" data-label="Porta de entrada">Jose Luiz<br>Reginaldo</td>
+                            <td contenteditable="true" data-label="Auditório">Paulo Henrique</td>
+                            <td contenteditable="true" data-label="Leitor Sentinela">Sandro</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" data-label="Data">28-04-outubro</td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo">Bruno<br>Robson</td>
+                            <td contenteditable="true" data-label="Palco">Luiz Henrique<br>Flavio</td>
+                            <td contenteditable="true" data-label="Microfones">Denis</td>
+                            <td contenteditable="true" data-label="Porta de entrada">Ezequiel</td>
+                            <td contenteditable="true" data-label="Auditório">Marcos Ferreira</td>
+                            <td contenteditable="true" data-label="Leitor Sentinela">Midian Nascimento</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" data-label="Data">05-11-outubro</td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo">Uashgiton<br>Alberto Jr</td>
+                            <td contenteditable="true" data-label="Palco">Paulo Henrique</td>
+                            <td contenteditable="true" data-label="Microfones">Jose Luiz<br>Pedro Henrique</td>
+                            <td contenteditable="true" data-label="Porta de entrada">Andrei</td>
+                            <td contenteditable="true" data-label="Auditório">Humberto</td>
+                            <td contenteditable="true" data-label="Leitor Sentinela">Alex Lelis</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" data-label="Data">12-18-outubro</td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo">Ezequiel<br>Samuel</td>
+                            <td contenteditable="true" data-label="Palco">Sandro</td>
+                            <td contenteditable="true" data-label="Microfones">Bruno<br>Alberto Rodrigues</td>
+                            <td contenteditable="true" data-label="Porta de entrada">Sidney</td>
+                            <td contenteditable="true" data-label="Auditório">Jose Luiz</td>
+                            <td contenteditable="true" data-label="Leitor Sentinela">Denis</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn-add" onclick="adicionarLinha()">+ Adicionar Linha</button>
+            <button class="btn-print" onclick="gerarPDF()">🖨️ Descarregar PDF</button>
+        </div>
+    </div>
+
+    <script>
+        function adicionarLinha() {
+            const corpoTabela = document.getElementById('corpo-tabela');
+            const novaLinha = document.createElement('tr');
+            
+            novaLinha.innerHTML = `
+                <td contenteditable="true" data-label="Data"></td>
+                <td contenteditable="true" data-label="Áudio / Vídeo"></td>
+                <td contenteditable="true" data-label="Palco"></td>
+                <td contenteditable="true" data-label="Microfones"></td>
+                <td contenteditable="true" data-label="Porta de entrada"></td>
+                <td contenteditable="true" data-label="Auditório"></td>
+                <td contenteditable="true" data-label="Leitor Sentinela"></td>
+            `;
+            
+            corpoTabela.appendChild(novaLinha);
+            novaLinha.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function gerarPDF() {
+            const elemento = document.getElementById('conteudo-pdf');
+            const botaoPDF = document.querySelector('.btn-print');
+            
+            document.body.classList.add('exportando-pdf');
+            
+            botaoPDF.innerText = "A gerar PDF...";
+            botaoPDF.disabled = true;
+
+            const opcoes = {
+                margin:       [2, 2, 2, 2], 
+                filename:     'Designacoes_Mecanicas.pdf',
+                image:        { type: 'jpeg', quality: 1 },
+                html2canvas:  { scale: 2, useCORS: true }, 
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+            };
+
+            setTimeout(() => {
+                html2pdf().set(opcoes).from(elemento).save().then(() => {
+                    botaoPDF.innerText = "🖨️ Descarregar PDF";
+                    botaoPDF.disabled = false;
+                    document.body.classList.remove('exportando-pdf');
+                }).catch(err => {
+                    botaoPDF.innerText = "🖨️ Descarregar PDF";
+                    botaoPDF.disabled = false;
+                    document.body.classList.remove('exportando-pdf');
+                });
+            }, 100);
+        }
+    </script>
+</body>
+</html>
