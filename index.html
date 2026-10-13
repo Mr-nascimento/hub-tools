@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programação de Campo da Semana</title>
+    <style>
+        :root {
+            --dark-green: #387C44;
+            --text-green: #2B7336;
+            --light-green-bg: #EAF4EA;
+            --very-light-bg: #F7FBF7;
+            --border-color: #C8E1CC;
+            --red-text: #A83232;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Estilos do Cabeçalho */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: var(--text-green);
+            font-size: 24px;
+            text-transform: uppercase;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+        }
+
+        .header-line {
+            height: 4px;
+            background-color: var(--text-green);
+            width: 100%;
+        }
+
+        /* Estilos da Tabela */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: var(--dark-green);
+            color: white;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px 12px;
+        }
+
+        .col-dia {
+            background-color: var(--light-green-bg);
+            font-weight: bold;
+            color: var(--text-green);
+            text-align: center;
+            vertical-align: middle;
+            width: 120px;
+            font-size: 15px;
+        }
+
+        td:not(.col-dia) {
+            background-color: var(--very-light-bg);
+        }
+
+        /* Container de Edição */
+        .editable {
+            outline: none;
+            min-height: 20px;
+        }
+
+        .editable:hover, .editable:focus {
+            background-color: #fff;
+            box-shadow: inset 0 0 0 1px #80bdff;
+            border-radius: 2px;
+        }
+
+        /* Classes Utilitárias para Cores no Texto Inicial */
+        .txt-red { color: var(--red-text); }
+        .txt-green { color: var(--text-green); }
+        .txt-bold { font-weight: bold; }
+        .text-center { text-align: center; }
+
+        /* Observação */
+        .observacao-box {
+            border-left: 5px solid var(--text-green);
+            background-color: var(--light-green-bg);
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        /* Botão de Impressão */
+        .print-btn-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: var(--text-green);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            background-color: var(--dark-green);
+        }
+
+        /* Toolbar de Formatação Simples */
+        .toolbar {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .toolbar button {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            margin: 0 2px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .toolbar button:hover {
+            background: #e9ecef;
+        }
+
+        @media print {
+            body {
+                background-color: #fff;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .no-print {
+                display: none !important;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 15mm;
+            }
+            .editable:hover, .editable:focus {
+                box-shadow: none;
+                background-color: inherit;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="print-btn-container no-print">
+        <button class="btn" onclick="window.print()">🖨️ Imprimir para PDF</button>
+    </div>
+
+    <div class="toolbar no-print">
+        <span><b>Ferramentas de formatação:</b> Selecione um texto na tabela e clique para formatar: </span>
+        <button onclick="document.execCommand('bold', false, null)"><b>Negrito</b></button>
+        <button onclick="document.execCommand('foreColor', false, '#A83232')" style="color: #A83232;"><b>Cor: Dirigente</b></button>
+        <button onclick="document.execCommand('foreColor', false, '#2B7336')" style="color: #2B7336;"><b>Cor: Verde</b></button>
+        <button onclick="document.execCommand('foreColor', false, '#333333')" style="color: #333333;"><b>Cor: Preto</b></button>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Programação de Campo da Semana</h1>
+            <div class="header-line"></div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 15%;">DIAS DA SEMANA</th>
+                    <th style="width: 28.33%;">MANHÃ</th>
+                    <th style="width: 28.33%;">TARDE</th>
+                    <th style="width: 28.33%;">NOITE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Segunda -->
+                <tr>
+                    <td class="col-dia">Segunda</td>
+                    <td>
+                        <div class="editable" contenteditable="true">
+                            <span class="txt-bold txt-green">TPL</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="editable" contenteditable="true">
+                            <span class="txt-bold txt-green">Horário: 15:00</span><br>
+                            <span class="txt-bold txt-red">Dirigente: Humberto</span><br>
+                            Casa de Marly - Olivença A, B
+                        </div>
+                    </td>
+                    <td>
+                        <div class="editable" contenteditable="true">
+                            <span class="txt-bold txt-green">Horário: 19:15</span><br>
+                            <span class="txt-bold txt-red">Dirigente: Andrei</span><br>
+                            Cartas no Salão do Reino
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Terça -->
+                <tr>
+                    <td class="col-dia">Terça</td>
+                    <td class="text-center">
+                        <div class="editable" contenteditable="true">-</div>
+                    </td>
+                    <td>
+                        <div class="editable" contenteditable="true">
+                            <span class="txt-bold txt-green">Horário: 15:00</span><br>
+                            <span class="txt-bold txt-red">Dirigente: Alberto Rodrigues</span><br>
+                            Salão - Pérolas A, B
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="editable" contenteditable="true">-</div>
+                    </td>
+                </tr>
+
+                <!-- Quarta -->
+                <tr>
+                    <td class="col-dia">Quarta</td>
+                    <td>
+                        <div class="editable" contenteditable="true">
+                            <span class="txt-bold txt-green">Horário: 8:30</span><br>
+                            <span class="txt-bold txt-red">Dirigente: Valdson</span><br>
+                            Salão - Jardim Atlântico 1, 2 e Praia
+                        </div>
+                    </td>
+                    <td>
+                        <div class="editable" contenteditable="true">
+                            <span class="txt-bold txt-green">Horário: 15:00</span><br>
+                            <span class="txt-bold txt-red">Dirigente: Marcus</span><br>
+                            Casa de Marly - Olivença C, D, Cai n'Água e Sirihyba
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="editable" contenteditable="true">-</div>
+                    </td>
+                </tr>
+
+                <!-- Quinta -->
+                <tr>
+                    <td class="col-dia">Quinta</td>
+                    <td>
+                        <div class="editable" contenteditable="true">
+                            <span class="txt-bold txt-green">TPL</span>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="editable" contenteditable="true">-</div>
+                    </td>
+                    <td>
+                        <div class="editable" contenteditable="true">
+                            <span class="txt-bold txt-green">Reunião</span>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Sexta -->
+                <tr>
+                    <td class="col-dia">Sexta</td>
+                    <td class="text-center">
+                        <div class="editable" contenteditable="true">-</div>
+                    </td>
+                    <td>
+                        <div class="editable" contenteditable="true">
+                            <span class="txt-bold txt-green">Horário: 15:00</span><br>
+                            <span class="txt-bold txt-red">Dirigente: José Luiz</span><br>
+                            Casa Alberto - Areal A, Areal Praia
+                        </div>
+                    </td>
+                    <td>
+                        <div class="editable" contenteditable="true">
+                            <span class="txt-bold txt-green">Horário: 18:00</span><br>
+                            <span class="txt-bold txt-red">Dirigente: Flávio</span><br>
+                            Salão do Reino - Lot. Tropical
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Sábado (Linha 1) -->
+                <tr>
+                    <td class="col-dia" rowspan="3">Sábado</td>
+                    <td>
+                        <div class="editable" contenteditable="true">
+                            <span class="txt-bold txt-green">TODOS OS GRUPOS<br>Horário: 9:00</span><br>
+                            <span class="txt-bold txt-red">Dirigente: Robson</span><br>
+                            Pregação<br>
+                            Salão - Ceplus, São Jorge
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="editable" contenteditable="true">-</div>
+                    </td>
+                    <td class="text-center">
+                        <div class="editable" contenteditable="true">-</div>
+                    </td>
+                </tr>
+                <!-- Sábado (Linha 2) -->
+                <tr>
+                    <td class="text-center">
+                        <div class="editable" contenteditable="true">-</div>
+                    </td>
+                    <td>
+                        <div class="editable" contenteditable="true">
+                            <span class="txt-bold txt-green">GRUPOS 1 E 3<br>Horário: 15:30</span><br>
+                            Salão - Lot. Tropical e Barreira
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="editable" contenteditable="true">-</div>
+                    </td>
+                </tr>
+                <!-- Sábado (Linha 3) -->
+                <tr>
+                    <td class="text-center">
+                        <div class="editable" contenteditable="true">-</div>
+                    </td>
+                    <td>
+                        <div class="editable" contenteditable="true">
+                            <span class="txt-bold txt-green">GRUPOS 2 E 4<br>Horário: 15:30</span><br>
+                            Casa Alberto - Cururupe A, B
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="editable" contenteditable="true">-</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="observacao-box">
+            <div class="editable" contenteditable="true">
+                <span class="txt-bold txt-green">OBSERVAÇÃO:</span><br>
+                <span class="txt-bold">Último fim de semana:</span> Todos os grupos juntos (Aldeia, Serraria, Jairi)
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Prevenir formatações indesejadas ao colar texto na área editável
+        document.querySelectorAll('.editable').forEach(el => {
+            el.addEventListener('paste', function(e) {
+                e.preventDefault();
+                // Pega o texto puro do clipboard e insere para não quebrar a tabela
+                var text = (e.originalEvent || e).clipboardData.getData('text/plain');
+                document.execCommand('insertText', false, text);
+            });
+        });
+    </script>
+</body>
+</html>
