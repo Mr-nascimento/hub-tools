@@ -47,7 +47,7 @@
 
         .table-wrapper {
             width: 100%;
-            overflow-x: auto; /* Permite scroll horizontal se o ecrã for muito pequeno */
+            overflow-x: auto;
         }
 
         table {
@@ -78,6 +78,7 @@
         td {
             font-size: 14px;
             line-height: 1.2;
+            height: 35px; /* Garante altura mínima para fácil preenchimento */
         }
 
         th:nth-child(1), td:nth-child(1) {
@@ -86,7 +87,6 @@
             font-weight: bold;
         }
 
-        /* Removido o display: block que estava a quebrar a tabela no desktop */
         [contenteditable="true"] {
             outline: none;
             min-height: 20px;
@@ -146,7 +146,7 @@
             body:not(.exportando-pdf) th, 
             body:not(.exportando-pdf) td, 
             body:not(.exportando-pdf) tr {
-                display: block; /* Aqui sim, no telemóvel, deve ser bloco */
+                display: block;
                 width: 100%;
             }
 
@@ -175,6 +175,7 @@
                 position: relative;
                 padding: 10px 10px 10px 45% !important;
                 min-height: 40px;
+                height: auto;
             }
             
             body:not(.exportando-pdf) td:last-child {
@@ -220,77 +221,78 @@
                         </tr>
                     </thead>
                     <tbody id="corpo-tabela">
+                        <!-- Geradas 8 linhas iniciais totalmente limpas (incluindo datas) -->
                         <tr>
-                            <td contenteditable="true" data-label="Data">24-30-agosto</td>
-                            <td contenteditable="true" data-label="Áudio / Vídeo">Flavio Santos<br>Ezequiel</td>
-                            <td contenteditable="true" data-label="Palco">Samuel</td>
-                            <td contenteditable="true" data-label="Microfones">Midian Nascimento<br>Robson</td>
-                            <td contenteditable="true" data-label="Porta de entrada">Alberto j</td>
-                            <td contenteditable="true" data-label="Auditório">Igor</td>
-                            <td contenteditable="true" data-label="Leitor Sentinela">Lucas Da Hora</td>
+                            <td contenteditable="true" data-label="Data"></td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo"></td>
+                            <td contenteditable="true" data-label="Palco"></td>
+                            <td contenteditable="true" data-label="Microfones"></td>
+                            <td contenteditable="true" data-label="Porta de entrada"></td>
+                            <td contenteditable="true" data-label="Auditório"></td>
+                            <td contenteditable="true" data-label="Leitor Sentinela"></td>
                         </tr>
                         <tr>
-                            <td contenteditable="true" data-label="Data">31-6-setembro</td>
-                            <td contenteditable="true" data-label="Áudio / Vídeo">Luis Henrique<br>Pedro Henrique</td>
-                            <td contenteditable="true" data-label="Palco">Alberto Rodrigues</td>
-                            <td contenteditable="true" data-label="Microfones">Bruno<br>Reginaldo</td>
-                            <td contenteditable="true" data-label="Porta de entrada">Alex Lelis</td>
-                            <td contenteditable="true" data-label="Auditório">Claudio</td>
-                            <td contenteditable="true" data-label="Leitor Sentinela">Humberto</td>
+                            <td contenteditable="true" data-label="Data"></td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo"></td>
+                            <td contenteditable="true" data-label="Palco"></td>
+                            <td contenteditable="true" data-label="Microfones"></td>
+                            <td contenteditable="true" data-label="Porta de entrada"></td>
+                            <td contenteditable="true" data-label="Auditório"></td>
+                            <td contenteditable="true" data-label="Leitor Sentinela"></td>
                         </tr>
                         <tr>
-                            <td contenteditable="true" data-label="Data">07-13-setembro</td>
-                            <td contenteditable="true" data-label="Áudio / Vídeo">Sidney<br>Samuel</td>
-                            <td contenteditable="true" data-label="Palco">Midian Nascimento</td>
-                            <td contenteditable="true" data-label="Microfones">Pedro Henrique<br>Flavio</td>
-                            <td contenteditable="true" data-label="Porta de entrada">Felipe Paixao</td>
-                            <td contenteditable="true" data-label="Auditório">Paulo Henrique</td>
-                            <td contenteditable="true" data-label="Leitor Sentinela">Alberto j</td>
+                            <td contenteditable="true" data-label="Data"></td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo"></td>
+                            <td contenteditable="true" data-label="Palco"></td>
+                            <td contenteditable="true" data-label="Microfones"></td>
+                            <td contenteditable="true" data-label="Porta de entrada"></td>
+                            <td contenteditable="true" data-label="Auditório"></td>
+                            <td contenteditable="true" data-label="Leitor Sentinela"></td>
                         </tr>
                         <tr>
-                            <td contenteditable="true" data-label="Data">14-20-setembro</td>
-                            <td contenteditable="true" data-label="Áudio / Vídeo">Luis Henrique<br>Flavio Santos</td>
-                            <td contenteditable="true" data-label="Palco">Robson</td>
-                            <td contenteditable="true" data-label="Microfones">Reginaldo<br>Alberto Rodrigues</td>
-                            <td contenteditable="true" data-label="Porta de entrada">Lucas Da Hora</td>
-                            <td contenteditable="true" data-label="Auditório">Reginaldo</td>
-                            <td contenteditable="true" data-label="Leitor Sentinela">Ezequiel</td>
+                            <td contenteditable="true" data-label="Data"></td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo"></td>
+                            <td contenteditable="true" data-label="Palco"></td>
+                            <td contenteditable="true" data-label="Microfones"></td>
+                            <td contenteditable="true" data-label="Porta de entrada"></td>
+                            <td contenteditable="true" data-label="Auditório"></td>
+                            <td contenteditable="true" data-label="Leitor Sentinela"></td>
                         </tr>
                         <tr>
-                            <td contenteditable="true" data-label="Data">21-27-setembro</td>
-                            <td contenteditable="true" data-label="Áudio / Vídeo">Alberto Jr<br>Samuel</td>
-                            <td contenteditable="true" data-label="Palco">Sidney</td>
-                            <td contenteditable="true" data-label="Microfones">Pedro henrique</td>
-                            <td contenteditable="true" data-label="Porta de entrada">Jose Luiz<br>Reginaldo</td>
-                            <td contenteditable="true" data-label="Auditório">Paulo Henrique</td>
-                            <td contenteditable="true" data-label="Leitor Sentinela">Sandro</td>
+                            <td contenteditable="true" data-label="Data"></td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo"></td>
+                            <td contenteditable="true" data-label="Palco"></td>
+                            <td contenteditable="true" data-label="Microfones"></td>
+                            <td contenteditable="true" data-label="Porta de entrada"></td>
+                            <td contenteditable="true" data-label="Auditório"></td>
+                            <td contenteditable="true" data-label="Leitor Sentinela"></td>
                         </tr>
                         <tr>
-                            <td contenteditable="true" data-label="Data">28-04-outubro</td>
-                            <td contenteditable="true" data-label="Áudio / Vídeo">Bruno<br>Robson</td>
-                            <td contenteditable="true" data-label="Palco">Luiz Henrique<br>Flavio</td>
-                            <td contenteditable="true" data-label="Microfones">Denis</td>
-                            <td contenteditable="true" data-label="Porta de entrada">Ezequiel</td>
-                            <td contenteditable="true" data-label="Auditório">Marcos Ferreira</td>
-                            <td contenteditable="true" data-label="Leitor Sentinela">Midian Nascimento</td>
+                            <td contenteditable="true" data-label="Data"></td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo"></td>
+                            <td contenteditable="true" data-label="Palco"></td>
+                            <td contenteditable="true" data-label="Microfones"></td>
+                            <td contenteditable="true" data-label="Porta de entrada"></td>
+                            <td contenteditable="true" data-label="Auditório"></td>
+                            <td contenteditable="true" data-label="Leitor Sentinela"></td>
                         </tr>
                         <tr>
-                            <td contenteditable="true" data-label="Data">05-11-outubro</td>
-                            <td contenteditable="true" data-label="Áudio / Vídeo">Uashgiton<br>Alberto Jr</td>
-                            <td contenteditable="true" data-label="Palco">Paulo Henrique</td>
-                            <td contenteditable="true" data-label="Microfones">Jose Luiz<br>Pedro Henrique</td>
-                            <td contenteditable="true" data-label="Porta de entrada">Andrei</td>
-                            <td contenteditable="true" data-label="Auditório">Humberto</td>
-                            <td contenteditable="true" data-label="Leitor Sentinela">Alex Lelis</td>
+                            <td contenteditable="true" data-label="Data"></td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo"></td>
+                            <td contenteditable="true" data-label="Palco"></td>
+                            <td contenteditable="true" data-label="Microfones"></td>
+                            <td contenteditable="true" data-label="Porta de entrada"></td>
+                            <td contenteditable="true" data-label="Auditório"></td>
+                            <td contenteditable="true" data-label="Leitor Sentinela"></td>
                         </tr>
                         <tr>
-                            <td contenteditable="true" data-label="Data">12-18-outubro</td>
-                            <td contenteditable="true" data-label="Áudio / Vídeo">Ezequiel<br>Samuel</td>
-                            <td contenteditable="true" data-label="Palco">Sandro</td>
-                            <td contenteditable="true" data-label="Microfones">Bruno<br>Alberto Rodrigues</td>
-                            <td contenteditable="true" data-label="Porta de entrada">Sidney</td>
-                            <td contenteditable="true" data-label="Auditório">Jose Luiz</td>
-                            <td contenteditable="true" data-label="Leitor Sentinela">Denis</td>
+                            <td contenteditable="true" data-label="Data"></td>
+                            <td contenteditable="true" data-label="Áudio / Vídeo"></td>
+                            <td contenteditable="true" data-label="Palco"></td>
+                            <td contenteditable="true" data-label="Microfones"></td>
+                            <td contenteditable="true" data-label="Porta de entrada"></td>
+                            <td contenteditable="true" data-label="Auditório"></td>
+                            <td contenteditable="true" data-label="Leitor Sentinela"></td>
                         </tr>
                     </tbody>
                 </table>
