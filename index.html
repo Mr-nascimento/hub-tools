@@ -159,6 +159,54 @@
             background: #e9ecef;
         }
 
+        .mobile-only {
+            display: none;
+        }
+
+        /* Responsividade - Cards no Mobile */
+        @media screen and (max-width: 768px) {
+            .container { padding: 15px; }
+            table { border: none; }
+            table, thead, tbody, th, td, tr { display: block; width: 100%; box-sizing: border-box; }
+            thead { display: none; } /* Oculta o cabeçalho original da tabela no mobile */
+            tr {
+                margin-bottom: 20px;
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+                background-color: var(--very-light-bg);
+            }
+            td {
+                text-align: left !important;
+                border: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 15px;
+            }
+            td:last-child { border-bottom: none; }
+            .col-dia {
+                background-color: var(--dark-green) !important;
+                color: white !important;
+                font-size: 18px;
+                text-align: center !important;
+            }
+            /* Exibe o período (Manhã, Tarde, Noite) antes do conteúdo em telas pequenas */
+            td[data-label]::before {
+                content: attr(data-label);
+                display: block;
+                font-weight: bold;
+                color: var(--text-green);
+                margin-bottom: 8px;
+                font-size: 13px;
+                text-transform: uppercase;
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 4px;
+            }
+            .mobile-only {
+                display: block !important;
+            }
+        }
+
         @media print {
             body {
                 background-color: #fff;
@@ -220,19 +268,19 @@
                 <!-- Segunda -->
                 <tr>
                     <td class="col-dia">Segunda</td>
-                    <td>
+                    <td data-label="Manhã">
                         <div class="editable" contenteditable="true">
                             <span class="txt-bold txt-green">TPL</span>
                         </div>
                     </td>
-                    <td>
+                    <td data-label="Tarde">
                         <div class="editable" contenteditable="true">
                             <span class="txt-bold txt-green">Horário: 15:00</span><br>
                             <span class="txt-bold txt-red">Dirigente: Humberto</span><br>
                             Casa de Marly - Olivença A, B
                         </div>
                     </td>
-                    <td>
+                    <td data-label="Noite">
                         <div class="editable" contenteditable="true">
                             <span class="txt-bold txt-green">Horário: 19:15</span><br>
                             <span class="txt-bold txt-red">Dirigente: Andrei</span><br>
@@ -244,17 +292,17 @@
                 <!-- Terça -->
                 <tr>
                     <td class="col-dia">Terça</td>
-                    <td class="text-center">
+                    <td class="text-center" data-label="Manhã">
                         <div class="editable" contenteditable="true">-</div>
                     </td>
-                    <td>
+                    <td data-label="Tarde">
                         <div class="editable" contenteditable="true">
                             <span class="txt-bold txt-green">Horário: 15:00</span><br>
                             <span class="txt-bold txt-red">Dirigente: Alberto Rodrigues</span><br>
                             Salão - Pérolas A, B
                         </div>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center" data-label="Noite">
                         <div class="editable" contenteditable="true">-</div>
                     </td>
                 </tr>
@@ -262,21 +310,21 @@
                 <!-- Quarta -->
                 <tr>
                     <td class="col-dia">Quarta</td>
-                    <td>
+                    <td data-label="Manhã">
                         <div class="editable" contenteditable="true">
                             <span class="txt-bold txt-green">Horário: 8:30</span><br>
                             <span class="txt-bold txt-red">Dirigente: Valdson</span><br>
                             Salão - Jardim Atlântico 1, 2 e Praia
                         </div>
                     </td>
-                    <td>
+                    <td data-label="Tarde">
                         <div class="editable" contenteditable="true">
                             <span class="txt-bold txt-green">Horário: 15:00</span><br>
                             <span class="txt-bold txt-red">Dirigente: Marcus</span><br>
                             Casa de Marly - Olivença C, D, Cai n'Água e Sirihyba
                         </div>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center" data-label="Noite">
                         <div class="editable" contenteditable="true">-</div>
                     </td>
                 </tr>
@@ -284,15 +332,15 @@
                 <!-- Quinta -->
                 <tr>
                     <td class="col-dia">Quinta</td>
-                    <td>
+                    <td data-label="Manhã">
                         <div class="editable" contenteditable="true">
                             <span class="txt-bold txt-green">TPL</span>
                         </div>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center" data-label="Tarde">
                         <div class="editable" contenteditable="true">-</div>
                     </td>
-                    <td>
+                    <td data-label="Noite">
                         <div class="editable" contenteditable="true">
                             <span class="txt-bold txt-green">Reunião</span>
                         </div>
@@ -302,17 +350,17 @@
                 <!-- Sexta -->
                 <tr>
                     <td class="col-dia">Sexta</td>
-                    <td class="text-center">
+                    <td class="text-center" data-label="Manhã">
                         <div class="editable" contenteditable="true">-</div>
                     </td>
-                    <td>
+                    <td data-label="Tarde">
                         <div class="editable" contenteditable="true">
                             <span class="txt-bold txt-green">Horário: 15:00</span><br>
                             <span class="txt-bold txt-red">Dirigente: José Luiz</span><br>
                             Casa Alberto - Areal A, Areal Praia
                         </div>
                     </td>
-                    <td>
+                    <td data-label="Noite">
                         <div class="editable" contenteditable="true">
                             <span class="txt-bold txt-green">Horário: 18:00</span><br>
                             <span class="txt-bold txt-red">Dirigente: Flávio</span><br>
@@ -324,7 +372,7 @@
                 <!-- Sábado (Linha 1) -->
                 <tr>
                     <td class="col-dia" rowspan="3">Sábado</td>
-                    <td>
+                    <td data-label="Manhã">
                         <div class="editable" contenteditable="true">
                             <span class="txt-bold txt-green">TODOS OS GRUPOS<br>Horário: 9:00</span><br>
                             <span class="txt-bold txt-red">Dirigente: Robson</span><br>
@@ -332,40 +380,42 @@
                             Salão - Ceplus, São Jorge
                         </div>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center" data-label="Tarde">
                         <div class="editable" contenteditable="true">-</div>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center" data-label="Noite">
                         <div class="editable" contenteditable="true">-</div>
                     </td>
                 </tr>
                 <!-- Sábado (Linha 2) -->
                 <tr>
-                    <td class="text-center">
+                    <td class="col-dia mobile-only">Sábado (Cont.)</td>
+                    <td class="text-center" data-label="Manhã">
                         <div class="editable" contenteditable="true">-</div>
                     </td>
-                    <td>
+                    <td data-label="Tarde">
                         <div class="editable" contenteditable="true">
                             <span class="txt-bold txt-green">GRUPOS 1 E 3<br>Horário: 15:30</span><br>
                             Salão - Lot. Tropical e Barreira
                         </div>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center" data-label="Noite">
                         <div class="editable" contenteditable="true">-</div>
                     </td>
                 </tr>
                 <!-- Sábado (Linha 3) -->
                 <tr>
-                    <td class="text-center">
+                    <td class="col-dia mobile-only">Sábado (Cont.)</td>
+                    <td class="text-center" data-label="Manhã">
                         <div class="editable" contenteditable="true">-</div>
                     </td>
-                    <td>
+                    <td data-label="Tarde">
                         <div class="editable" contenteditable="true">
                             <span class="txt-bold txt-green">GRUPOS 2 E 4<br>Horário: 15:30</span><br>
                             Casa Alberto - Cururupe A, B
                         </div>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center" data-label="Noite">
                         <div class="editable" contenteditable="true">-</div>
                     </td>
                 </tr>
